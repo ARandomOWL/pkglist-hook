@@ -1,0 +1,15 @@
+# Create a list of installed pacman packages in /etc/.pkglist
+#
+# To restore packages use: pacman -S - < .pkglist
+# To avoid AUR packages use: pacman -S $(comm -12 <(pacman -Slq | sort) <(sort .pkglist))
+
+[Trigger]
+Operation = Install
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Create a list of installed pacman packages in /etc/.pkglist
+When = PostTransaction
+Exec = /usr/share/libalpm/scripts/01-create-package-list
